@@ -15,7 +15,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 15px;
+            padding: 10px;
             overflow-x: hidden;
         }
 
@@ -24,11 +24,13 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.4s ease;
+            width: 100%;
+            max-width: 340px;
         }
         .envelope-container:hover { transform: scale(1.04); }
         .envelope {
-            width: 320px;
-            height: 220px;
+            width: 100%;
+            height: 200px;
             background: linear-gradient(135deg, #0d281c 0%, #05100a 100%);
             border: 2px solid #d4af37;
             border-radius: 12px;
@@ -50,21 +52,21 @@
         .envelope-text {
             font-family: 'Reem Kufi', sans-serif;
             color: #d4af37;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             z-index: 1;
         }
 
-        /* الإطار الرئيسي والدعوة المقسمة إلى مراحل */
+        /* الإطار الرئيسي مضبوط بدقة على الشاشة */
         .card-frame {
             display: none;
             width: 100%;
-            max-width: 420px;
-            min-height: 500px;
+            max-width: 380px;
+            min-height: 460px;
             background: linear-gradient(145deg, #0d281c 0%, #05100a 100%);
             border: 2px solid #d4af37;
-            border-radius: 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.9), inset 0 0 25px rgba(212,175,55,0.15);
-            padding: 35px 25px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.15);
+            padding: 25px 15px;
             text-align: center;
             position: relative;
             flex-direction: column;
@@ -72,72 +74,73 @@
             align-items: center;
         }
 
-        /* زخرفة الأركان للإطار */
+        /* زوايا زخرفية للإطار */
         .corner-decoration {
             position: absolute;
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             border: 2px solid #d4af37;
         }
-        .top-left { top: 10px; left: 10px; border-right: none; border-bottom: none; }
-        .top-right { top: 10px; right: 10px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: 10px; left: 10px; border-right: none; border-top: none; }
-        .bottom-right { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+        .top-left { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+        .top-right { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+        .bottom-left { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+        .bottom-right { bottom: 8px; right: 8px; border-left: none; border-top: none; }
 
         /* التحكم في التتابع / السلاسل */
         .sequence {
             display: none;
             width: 100%;
-            animation: fadeIn 0.7s ease-in-out forwards;
+            animation: fadeIn 0.5s ease-in-out forwards;
         }
         .sequence.active {
             display: block;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* المحتوى والخطوط */
-        .bismillah { font-size: 1.2rem; color: #d4af37; margin-bottom: 20px; font-weight: bold; }
-        .title { font-family: 'Reem Kufi', sans-serif; font-size: 1.3rem; color: #e2d2a5; margin-bottom: 12px; line-height: 1.6; }
-        .subtitle { font-size: 1.05rem; color: #c4b28a; line-height: 1.7; }
+        /* المحتوى والخطوط متناسقة */
+        .bismillah { font-size: 1.1rem; color: #d4af37; margin-bottom: 15px; font-weight: bold; }
+        .title { font-family: 'Reem Kufi', sans-serif; font-size: 1.15rem; color: #e2d2a5; margin-bottom: 10px; line-height: 1.5; }
+        .subtitle { font-size: 0.95rem; color: #c4b28a; line-height: 1.6; }
         
-        .names-box { margin: 25px 0; }
-        .names { font-family: 'Reem Kufi', sans-serif; font-size: 2rem; color: #f3d98c; line-height: 1.6; }
-        .ampersand { font-size: 1.2rem; color: #fff; display: block; margin: 10px 0; opacity: 0.8; }
+        .names-box { margin: 20px 0; }
+        .names { font-family: 'Reem Kufi', sans-serif; font-size: 1.7rem; color: #f3d98c; line-height: 1.5; }
+        .ampersand { font-size: 1.1rem; color: #fff; display: block; margin: 8px 0; opacity: 0.8; }
 
         /* العد التنازلي الأنيق */
         .countdown-box {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
         }
         .time-block {
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 10px;
-            padding: 10px 15px;
+            border-radius: 8px;
+            padding: 8px 12px;
             text-align: center;
-            min-width: 70px;
+            min-width: 60px;
         }
-        .time-num { font-size: 1.2rem; color: #d4af37; font-weight: bold; font-family: 'Reem Kufi', sans-serif; }
-        .time-label { font-size: 0.8rem; color: #bfa878; }
+        .time-num { font-size: 1.1rem; color: #d4af37; font-weight: bold; font-family: 'Reem Kufi', sans-serif; }
+        .time-label { font-size: 0.75rem; color: #bfa878; }
 
         .details-box {
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
             border: 1px solid rgba(212, 175, 55, 0.3);
             text-align: right;
+            width: 100%;
         }
-        .detail-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; }
+        .detail-row { display: flex; align-items: center; margin-bottom: 12px; font-size: 0.95rem; }
         .detail-row:last-child { margin-bottom: 0; }
-        .detail-icon { margin-left: 12px; color: #d4af37; font-size: 1.2rem; }
-        .detail-text span { display: block; font-size: 0.85rem; color: #a3916b; }
+        .detail-icon { margin-left: 10px; color: #d4af37; font-size: 1.1rem; }
+        .detail-text span { display: block; font-size: 0.8rem; color: #a3916b; }
 
         /* الأزرار والتنقل */
         .nav-btn, .rsvp-btn {
@@ -145,15 +148,15 @@
             width: 100%;
             background: linear-gradient(135deg, #d4af37 0%, #aa8220 100%);
             color: #05100a;
-            padding: 13px;
-            font-size: 1.1rem;
+            padding: 12px;
+            font-size: 1rem;
             font-family: 'Reem Kufi', sans-serif;
             text-decoration: none;
-            border-radius: 30px;
+            border-radius: 25px;
             font-weight: bold;
             border: none;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
             transition: 0.3s;
             margin-top: 15px;
         }
@@ -162,20 +165,20 @@
         /* مؤشر المراحل (Dots) */
         .dots {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
-            margin-top: 15px;
+            margin-top: 12px;
         }
         .dot {
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: rgba(212, 175, 55, 0.3);
             border-radius: 50%;
         }
         .dot.active {
             background: #d4af37;
-            width: 20px;
-            border-radius: 10px;
+            width: 18px;
+            border-radius: 8px;
         }
     </style>
 </head>
@@ -246,7 +249,7 @@
                     </div>
                 </div>
             </div>
-            <p style="font-size: 0.95rem; color: #e2d2a5;">حضوركم يزيدنا شرفاً وتكتمل به فرحتنا</p>
+            <p style="font-size: 0.9rem; color: #e2d2a5;">حضوركم يزيدنا شرفاً وتكتمل به فرحتنا</p>
             
             <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" class="rsvp-btn">تأكيد الحضور (RSVP)</a>
         </div>
