@@ -8,277 +8,283 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            /* خلفية فخمة مع لمسة زليج/نقش مغربي تقليدي خفيف ومدمج */
             background: 
-                radial-gradient(circle, rgba(11,35,24,0.92) 0%, rgba(3,10,6,0.95) 100%),
+                radial-gradient(circle, rgba(61,48,43,0.95) 0%, rgba(28,21,18,0.98) 100%),
                 url('https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
-            color: #f7eedd;
+            color: #f4ebd0;
             font-family: 'Amiri', serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 10px;
-            overflow-x: hidden;
+            overflow-y: auto;
+            padding: 15px 10px;
+            direction: rtl;
+            text-align: right;
+        }
+
+        .music-toggle {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background: rgba(45, 35, 31, 0.9);
+            border: 1px solid #c5a059;
+            color: #e6c587;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 100;
+            display: none;
+            font-family: 'Reem Kufi', sans-serif;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         /* شاشة الظرف */
         .envelope-container {
             text-align: center;
             cursor: pointer;
-            transition: transform 0.4s ease;
-            width: 100%;
-            max-width: 340px;
+            width: 90%;
+            max-width: 320px;
         }
-        .envelope-container:hover { transform: scale(1.04); }
         .envelope {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #0d281c 0%, #05100a 100%);
-            border: 2px solid #d4af37;
+            height: 160px;
+            background: linear-gradient(135deg, #3d302b 0%, #1c1512 100%);
+            border: 2px solid #c5a059;
             border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8), inset 0 0 20px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             position: relative;
         }
         .envelope::after {
             content: '';
             position: absolute;
-            inset: 6px;
-            border: 1px dashed rgba(212, 175, 55, 0.4);
+            inset: 5px;
+            border: 1px dashed rgba(197, 160, 89, 0.4);
             border-radius: 8px;
         }
         .envelope-text {
             font-family: 'Reem Kufi', sans-serif;
-            color: #d4af37;
+            color: #e6c587;
             font-size: 1.1rem;
             z-index: 1;
         }
 
-        /* الإطار الرئيسي والدعوة المقسمة إلى مراحل */
-        .card-frame {
+        /* اختيار اللغات */
+        .language-selection {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            text-align: center;
+            width: 90%;
+            max-width: 320px;
+            animation: fadeIn 0.6s ease-in-out forwards;
+        }
+        .lang-title {
+            font-family: 'Reem Kufi', sans-serif;
+            color: #e6c587;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .lang-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #3d302b 0%, #1c1512 100%);
+            border: 1.5px solid #c5a059;
+            color: #e6c587;
+            padding: 12px;
+            border-radius: 10px;
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+        .lang-btn:hover {
+            background: #c5a059;
+            color: #1c1512;
+        }
+
+        /* محتوى الدعوة والسلايدر */
+        .invitation-content {
             display: none;
             width: 100%;
             max-width: 380px;
-            min-height: 460px;
-            background: linear-gradient(145deg, rgba(13,40,28,0.95) 0%, rgba(5,16,10,0.95) 100%);
-            border: 2px solid #d4af37;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(212,175,55,0.15);
-            padding: 25px 15px;
-            text-align: center;
-            position: relative;
             flex-direction: column;
-            justify-content: space-between;
             align-items: center;
-        }
-
-        /* زوايا زخرفية مغربية للإطار */
-        .corner-decoration {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #d4af37;
-        }
-        .top-left { top: 8px; left: 8px; border-right: none; border-bottom: none; }
-        .top-right { top: 8px; right: 8px; border-left: none; border-bottom: none; }
-        .bottom-left { bottom: 8px; left: 8px; border-right: none; border-top: none; }
-        .bottom-right { bottom: 8px; right: 8px; border-left: none; border-top: none; }
-
-        /* التحكم في التتابع / السلاسل */
-        .sequence {
-            display: none;
-            width: 100%;
-            animation: fadeIn 0.5s ease-in-out forwards;
-        }
-        .sequence.active {
-            display: block;
+            gap: 15px;
+            animation: fadeIn 0.6s ease-in-out forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* المحتوى والخطوط متناسقة */
-        .bismillah { font-size: 1.1rem; color: #d4af37; margin-bottom: 12px; font-weight: bold; }
-        .title { font-family: 'Reem Kufi', sans-serif; font-size: 1.15rem; color: #e2d2a5; margin-bottom: 8px; line-height: 1.5; }
-        .subtitle { font-size: 0.95rem; color: #c4b28a; line-height: 1.5; }
-        
-        .names-box { margin: 15px 0; }
-        .names { font-family: 'Reem Kufi', sans-serif; font-size: 1.6rem; color: #f3d98c; line-height: 1.4; }
-        .ampersand { font-size: 1rem; color: #fff; display: block; margin: 5px 0; opacity: 0.8; }
+        .card-image-box {
+            width: 100%;
+            border: 2px solid #c5a059;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            background: #1c1512;
+        }
+        .card-image-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
 
-        /* العد التنازلي الأنيق */
+        /* أزرار التنقل بين التصاور (السلايدر) */
+        .slider-nav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+        }
+        .nav-btn {
+            flex: 1;
+            background: rgba(61,48,43,0.9);
+            border: 1px solid #c5a059;
+            color: #e6c587;
+            padding: 8px;
+            border-radius: 8px;
+            font-family: 'Reem Kufi', sans-serif;
+            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            transition: 0.2s;
+        }
+        .nav-btn:hover {
+            background: #c5a059;
+            color: #1c1512;
+        }
+
+        /* العد التنازلي */
+        .countdown-card {
+            width: 100%;
+            background: linear-gradient(145deg, rgba(61,48,43,0.95) 0%, rgba(28,21,18,0.98) 100%);
+            border: 1.5px solid #c5a059;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+        }
+        .countdown-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 0.9rem;
+            color: #e6c587;
+            margin-bottom: 8px;
+        }
         .countdown-box {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
+            gap: 8px;
         }
         .time-block {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 8px;
-            padding: 8px 12px;
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 6px;
+            padding: 6px 10px;
             text-align: center;
-            min-width: 60px;
+            min-width: 50px;
         }
-        .time-num { font-size: 1.1rem; color: #d4af37; font-weight: bold; font-family: 'Reem Kufi', sans-serif; }
-        .time-label { font-size: 0.75rem; color: #bfa878; }
-
-        .details-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            text-align: right;
-            width: 100%;
-        }
-        .detail-row { display: flex; align-items: center; margin-bottom: 10px; font-size: 0.9rem; }
-        .detail-row:last-child { margin-bottom: 0; }
-        .detail-icon { margin-left: 10px; color: #d4af37; font-size: 1rem; }
-        .detail-text span { display: block; font-size: 0.75rem; color: #a3916b; }
-
-        /* الأزرار والتنقل */
-        .nav-btn, .rsvp-btn {
-            display: inline-block;
-            width: 100%;
-            background: linear-gradient(135deg, #d4af37 0%, #aa8220 100%);
-            color: #05100a;
-            padding: 11px;
-            font-size: 1rem;
-            font-family: 'Reem Kufi', sans-serif;
-            text-decoration: none;
-            border-radius: 25px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-            transition: 0.3s;
-            margin-top: 12px;
-        }
-        .nav-btn:hover, .rsvp-btn:hover { opacity: 0.9; transform: translateY(-2px); }
-
-        /* مؤشر المراحل (Dots) */
-        .dots {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .dot {
-            width: 7px;
-            height: 7px;
-            background: rgba(212, 175, 55, 0.3);
-            border-radius: 50%;
-        }
-        .dot.active {
-            background: #d4af37;
-            width: 18px;
-            border-radius: 8px;
-        }
+        .time-num { font-size: 1rem; color: #e6c587; font-weight: bold; font-family: 'Reem Kufi', sans-serif; }
+        .time-label { font-size: 0.65rem; color: #b8975b; }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة الأولى: الظرف -->
-    <div class="envelope-container" id="envelopeContainer" onclick="startInvitation()">
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mp3">
+    </audio>
+
+    <button class="music-toggle" id="musicToggleBtn" onclick="toggleMusic()">🔊 الموسيقى</button>
+
+    <!-- شاشة الظرف -->
+    <div class="envelope-container" id="envelopeContainer" onclick="openEnvelope()">
         <div class="envelope">
-            <div class="envelope-text">✉️ اضغط لفتح الدعوة</div>
+            <div class="envelope-text">اضغط لفتح الدعوة ✉</div>
         </div>
     </div>
 
-    <!-- الإطار الرئيسي والدعوة المقسمة إلى مراحل -->
-    <div class="card-frame" id="cardFrame">
-        <!-- زوايا زخرفية للإطار -->
-        <div class="corner-decoration top-left"></div>
-        <div class="corner-decoration top-right"></div>
-        <div class="corner-decoration bottom-left"></div>
-        <div class="corner-decoration bottom-right"></div>
+    <!-- اختيار اللغة -->
+    <div class="language-selection" id="languageSelection">
+        <div class="lang-title">المرجو اختيار لغة الدعوة</div>
+        <button class="lang-btn" onclick="selectLanguage('ar')">العربية 🇲🇦</button>
+        <button class="lang-btn" onclick="selectLanguage('fr')">Français 🇫🇷</button>
+        <button class="lang-btn" onclick="selectLanguage('en')">English 🇬🇧</button>
+    </div>
 
-        <!-- السلسلة 1: الترحيب والافتتاحية -->
-        <div class="sequence active" id="seq1">
-            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-            <div class="title">بأجواء الفرح والسرور والتقاليد المغربية العريقة</div>
-            <div class="subtitle" style="margin-top: 10px;">يتشرف أفراد العائلة بدعوتكم لمشاركتنا فرحة العمر في ليلة من أبهى ليالي العمر</div>
-            <button class="nav-btn" onclick="nextSeq(2)">متابعة الدعوة ←</button>
+    <!-- محتوى الدعوة -->
+    <div class="invitation-content" id="invitationContent">
+        <div class="card-image-box">
+            <img id="invitationImage" src="" alt="دعوة زفاف">
         </div>
 
-        <!-- السلسلة 2: إعلان أسماء العروسين -->
-        <div class="sequence" id="seq2">
-            <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-            <div class="subtitle">ببالغ الزينة والفرح نعلن زفاف</div>
-            <div class="names-box">
-                <div class="names">
-                    زينب ابن تاتو
-                    <span class="ampersand">و</span>
-                    خالد بابا
-                </div>
-            </div>
-            <div class="subtitle">بارك الله لهما وبارك عليهما وجمع بينهما في خير</div>
-            <button class="nav-btn" onclick="nextSeq(3)">معلومات الموعد والمكان ←</button>
+        <div class="slider-nav">
+            <button class="nav-btn" onclick="changeSlide(-1)">▶ السابق</button>
+            <button class="nav-btn" onclick="changeSlide(1)">التالي ◀</button>
         </div>
 
-        <!-- السلسلة 3: التفاصيل وتأكيد الحضور (RSVP) -->
-        <div class="sequence" id="seq3">
-            <div class="bismillah">تفاصيل الحفل</div>
-            <div class="details-box">
-                <div class="detail-row">
-                    <div class="detail-icon">📅</div>
-                    <div class="detail-text">
-                        <span>التاريخ</span>
-                        الجمعة 23 أكتوبر 2026
-                    </div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-icon">📍</div>
-                    <div class="detail-text">
-                        <span>المكان</span>
-                        قاعة حفلات La Perla - فاس
-                    </div>
-                </div>
-            </div>
-            <p style="font-size: 0.85rem; color: #e2d2a5; margin-bottom: 5px;">المرجو تأكيد الحضور لترتيب استقبالكم أحسن استقبال</p>
-            
-            <!-- زر الانتقال للعد التنازلي بعد الضغط أو تسجيل الحضور -->
-            <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" class="rsvp-btn" onclick="event.preventDefault(); nextSeq(4);">تأكيد الحضور (RSVP)</a>
-            <button class="nav-btn" style="margin-top: 8px; background: transparent; border: 1px solid #d4af37; color: #d4af37;" onclick="nextSeq(4)">تخطى إلى العد التنازلي ←</button>
-        </div>
-
-        <!-- السلسلة 4: العد التنازلي (تظهر بعد تسجيل الحضور) -->
-        <div class="sequence" id="seq4">
-            <div class="bismillah">شكراً لتأكيد حضوركم! ❤️</div>
-            <div class="title" style="font-size: 1.05rem;">العد التنازلي لليلة العمر</div>
-            <div class="subtitle" style="font-size: 0.85rem;">ننتظر لقاءكم بفارغ الصبر لتكتمل فرحتنا</div>
-            
-            <!-- العد التنازلي -->
+        <div class="countdown-card">
+            <div class="countdown-title">العد التنازلي لليلة العمر ❤️</div>
             <div class="countdown-box">
                 <div class="time-block"><div class="time-num" id="days">00</div><div class="time-label">يوم</div></div>
                 <div class="time-block"><div class="time-num" id="hours">00</div><div class="time-label">ساعة</div></div>
                 <div class="time-block"><div class="time-num" id="mins">00</div><div class="time-label">دقيقة</div></div>
             </div>
-
-            <p style="font-size: 0.8rem; color: #d4af37; margin-top: 10px;">أهلاً بكم في فاس العاصمة العلمية</p>
-        </div>
-
-        <!-- نقاط مؤشر التصفح -->
-        <div class="dots" id="dotsContainer" style="display:none;">
-            <div class="dot active" id="dot1"></div>
-            <div class="dot" id="dot2"></div>
-            <div class="dot" id="dot3"></div>
-            <div class="dot" id="dot4"></div>
         </div>
     </div>
 
     <script>
-        // العد التنازلي لـ 23 أكتوبر 2026
-        const targetDate = new Date("October 23, 2026 00:00:00").getTime();
+        let currentLang = 'ar';
+        let currentIndex = 0;
+        
+        const images = {
+            ar: ['ZAINAB/AR/ar-1.jpeg', 'ZAINAB/AR/ar-2.jpeg', 'ZAINAB/AR/ar-3.jpeg'],
+            fr: ['ZAINAB/FR/fr-1.jpeg', 'ZAINAB/FR/fr-2.jpeg', 'ZAINAB/FR/fr-3.jpeg'],
+            en: ['ZAINAB/ENG/eng-1.jpeg', 'ZAINAB/ENG/eng-2.jpeg', 'ZAINAB/ENG/eng-3.jpeg']
+        };
+
+        function openEnvelope() {
+            const music = document.getElementById('bgMusic');
+            music.play().catch(error => console.log("Audio play blocked", error));
+            
+            document.getElementById('envelopeContainer').style.display = 'none';
+            document.getElementById('languageSelection').style.display = 'flex';
+            document.getElementById('musicToggleBtn').style.display = 'block';
+        }
+
+        function selectLanguage(lang) {
+            currentLang = lang;
+            currentIndex = 0;
+            document.getElementById('languageSelection').style.display = 'none';
+            document.getElementById('invitationContent').style.display = 'flex';
+            updateImage();
+        }
+
+        function changeSlide(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) {
+                currentIndex = images[currentLang].length - 1;
+            } else if (currentIndex >= images[currentLang].length) {
+                currentIndex = 0;
+            }
+            updateImage();
+        }
+
+        function updateImage() {
+            document.getElementById('invitationImage').src = images[currentLang][currentIndex];
+        }
+
+        // العد التنازلي
+        const targetDate = new Date("November 13, 2026 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const diff = targetDate - now;
@@ -289,18 +295,16 @@
             }
         }, 1000);
 
-        function startInvitation() {
-            document.getElementById('envelopeContainer').style.display = 'none';
-            document.getElementById('cardFrame').style.display = 'flex';
-            document.getElementById('dotsContainer').style.display = 'flex';
-        }
-
-        function nextSeq(seqNumber) {
-            document.querySelectorAll('.sequence').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.dot').forEach(el => el.classList.remove('active'));
-
-            document.getElementById('seq' + seqNumber).classList.add('active');
-            document.getElementById('dot' + seqNumber).classList.add('active');
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            const btn = document.getElementById('musicToggleBtn');
+            if (music.paused) {
+                music.play();
+                btn.innerText = "🔊 الموسيقى";
+            } else {
+                music.pause();
+                btn.innerText = "🔇 صامت";
+            }
         }
     </script>
 </body>
